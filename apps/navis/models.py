@@ -15,6 +15,7 @@ from django.shortcuts import reverse
 
 
 class Navi(models.Model):
+
     id = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
     name = models.CharField(u"名称", max_length=50)
     logo = models.ImageField(upload_to='pictures/', default=u"image/default.png", max_length=100)

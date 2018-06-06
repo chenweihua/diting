@@ -20,6 +20,7 @@ urlpatterns = [
     url(r'^common/', include('common.urls.view_urls', namespace='common')),
     url(r'^navis/', include('navis.urls.view_urls', namespace='navis')),
     url(r'^likes/', include('likes.urls.view_urls', namespace='likes')),
+    url(r'^inceptions/', include('inceptions.urls.view_urls', namespace='inceptions')),
 
     # Api url view map
     url(r'^api/users/', include('users.urls.api_urls', namespace='api-users')),
