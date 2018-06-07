@@ -22,7 +22,7 @@ class Inception(NoDeleteModelMixin):
         verbose_name = u'inception数据库账号'
         verbose_name_plural = verbose_name
 
-        unique_together = [('host', 'port', 'is_enable')]
+        unique_together = [('host', 'port', 'is_active')]
 
         default_permissions = ()
         db_table = 'inception_hostinfo'

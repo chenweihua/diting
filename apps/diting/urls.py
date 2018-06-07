@@ -27,6 +27,7 @@ urlpatterns = [
     url(r'^api/common/', include('common.urls.api_urls', namespace='api-common')),
     url(r'^api/navis/', include('navis.urls.api_urls', namespace='api-navis')),
     url(r'^api/likes/', include('likes.urls.api_urls', namespace='api-likes')),
+    url(r'^api/inceptions/', include('inceptions.urls.api_urls', namespace='api-inceptions')),
 
     # External apps url
     url(r'^captcha/', include('captcha.urls')),

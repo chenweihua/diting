@@ -7,7 +7,7 @@ from ..models import Inception
 from common.utils import get_logger
 
 logger = get_logger(__file__)
-__all__ = ['InceptionCreateForm', 'InceptionUpdateForm', 'InceptionBulkUpdateForm']
+__all__ = ['InceptionCreateForm', 'InceptionUpdateForm', 'InceptionBulkUpdateForm', 'FileForm']
 
 
 class InceptionCreateForm(forms.ModelForm):
@@ -62,6 +62,9 @@ class InceptionUpdateForm(forms.ModelForm):
             'user': '* required'
 
         }
+
+class FileForm(forms.Form):
+    file = forms.FileField()
 
 
 class InceptionBulkUpdateForm(forms.ModelForm):

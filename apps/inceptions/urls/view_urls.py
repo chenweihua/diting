@@ -13,7 +13,7 @@ urlpatterns = [
     url(r'^inception/(?P<pk>[0-9]{36})/$', views.InceptionDetailView.as_view(), name='inception-detail'),
     url(r'^inception/(?P<pk>[0-9]{36})/update/$', views.InceptionUpdateView.as_view(), name='inception-update'),
     url(r'^inception/(?P<pk>[0-9]{36})/delete/$', views.InceptionDeleteView.as_view(), name='inception-delete'),
-    url(r'^inception/update/$', views.AssetBulkUpdateView.as_view(), name='asset-bulk-update'),
+    url(r'^inception/update/$', views.InceptionBulkUpdateView.as_view(), name='inception-bulk-update'),
     #
     # # User asset view
     # url(r'^user-asset/$', views.UserAssetListView.as_view(), name='user-asset-list'),

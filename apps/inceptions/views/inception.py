@@ -8,6 +8,7 @@ import codecs
 import chardet
 from io import StringIO
 
+
 from django.conf import settings
 from django.db import transaction
 from django.utils.translation import ugettext_lazy as _
@@ -129,6 +130,48 @@ class InceptionBulkUpdateView( ListView):
         return super().get_context_data(**kwargs)
 
 
+class InceptionBulkUpdateView(ListView):
+    model = Inception
+    form_class = forms.InceptionBulkUpdateForm
+    template_name = 'inceptions/inception_bulk_update.html'
+    success_url = reverse_lazy('inceptions:inception-list')
+    id_list = None
+    form = None
+
+    def get(self, request, *args, **kwargs):
+        inceptions_id = self.request.GET.get('inceptions_id', '')
+        self.id_list = [i for i in inceptions_id.split(',')]
+
+        if kwargs.get('form'):
+            self.form = kwargs['form']
+        elif inceptions_id:
+            self.form = self.form_class(
+                initial={'assets': self.id_list}
+            )
+        else:
+            self.form = self.form_class()
+        return super().get(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect(self.success_url)
+        else:
+            return self.get(request, form=form, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = {
+            'app': _('Inceptions'),
+            'action': _('Bulk update inception'),
+            'form': self.form,
+            'inceptions_selected': self.id_list,
+        }
+        kwargs.update(context)
+        return super().get_context_data(**kwargs)
+
+
+
 class InceptionUpdateView( SuccessMessageMixin, UpdateView):
     model = Inception
     form_class = forms.InceptionUpdateForm
@@ -210,7 +253,8 @@ class InceptionExportView(View):
         return JsonResponse({'redirect': url})
 
 
-class BulkImportInceptionView( JSONResponseMixin, FormView):
+
+class BulkImportInceptionView(JSONResponseMixin, FormView):
     form_class = forms.FileForm
 
     def form_valid(self, form):
