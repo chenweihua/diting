@@ -60,16 +60,9 @@ class InceptionListView(TemplateView):
 class InceptionCreateView(SuccessMessageMixin, CreateView):
     model = Inception
     form_class = forms.InceptionCreateForm
-    template_name = 'inceptions/inception_create.html'
-    success_url = reverse_lazy('iinceptions:inception-list')
+    template_name = 'inceptions/inception_create_update.html'
+    success_url = reverse_lazy('inceptions:inception-list')
 
-    # def form_valid(self, form):
-    #     print("form valid")
-    #     inception = form.save()
-    #     inception.created_by = self.request.user.username or 'Admin'
-    #     inception.date_created = timezone.now()
-    #     inception.save()
-    #     return super().form_valid(form)
 
     def get_form(self, form_class=None):
         form = super().get_form(form_class=form_class)
@@ -84,7 +77,7 @@ class InceptionCreateView(SuccessMessageMixin, CreateView):
         return super().get_context_data(**kwargs)
 
     def get_success_message(self, cleaned_data):
-        return create_success_msg % ({"name": cleaned_data["hostname"]})
+        return create_success_msg % ({"name": cleaned_data["host"]})
 
 
 
@@ -175,7 +168,7 @@ class InceptionBulkUpdateView(ListView):
 class InceptionUpdateView( SuccessMessageMixin, UpdateView):
     model = Inception
     form_class = forms.InceptionUpdateForm
-    template_name = 'inceptions/inception_update.html'
+    template_name = 'inceptions/inception_create_update.html'
     success_url = reverse_lazy('inceptions:inception-list')
 
     def get_context_data(self, **kwargs):
@@ -187,7 +180,7 @@ class InceptionUpdateView( SuccessMessageMixin, UpdateView):
         return super().get_context_data(**kwargs)
 
     def get_success_message(self, cleaned_data):
-        return update_success_msg % ({"name": cleaned_data["hostname"]})
+        return update_success_msg % ({"name": cleaned_data["host"]})
 
 
 class InceptionDeleteView( DeleteView):

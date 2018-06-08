@@ -2,10 +2,11 @@ from django.db import models, IntegrityError
 from django.utils.translation import ugettext_lazy as _
 
 from common.mixins import NoDeleteModelMixin
+import uuid
 
 
 class Inception(NoDeleteModelMixin):
-    id = models.AutoField(primary_key=True, verbose_name=u'主键id')
+    id = models.UUIDField(default=uuid.uuid4, primary_key=True)
     user = models.CharField(max_length=30, null=False, verbose_name=u'用户名')
     password = models.CharField(max_length=128, null=False, verbose_name=u'密码')
     host = models.CharField(max_length=32, null=False, verbose_name=u'ip地址')

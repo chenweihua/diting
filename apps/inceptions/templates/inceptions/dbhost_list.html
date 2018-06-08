@@ -3,18 +3,18 @@
 {% block table_search %}{% endblock %}
 {% block table_container %}
 <div class="uc pull-left  m-r-5">
-    <a href="{% url 'inceptions:inception-create' %}" class="btn btn-sm btn-primary"> {% trans "Create inception" %} </a>
+    <a href="{% url 'inceptions:dbhost-create' %}" class="btn btn-sm btn-primary"> {% trans "Create dbhost" %} </a>
 </div>
-<table class="table table-striped table-bordered table-hover " id="inception_list_table" >
+<table class="table table-striped table-bordered table-hover " id="dbhost_list_table" >
     <thead>
     <tr>
         <th class="text-center">
             <input type="checkbox" id="check_all" class="ipt_check_all" >
         </th>
-        <th class="text-center">{% trans 'Host' %}</th>
-        <th class="text-center">{% trans 'Username' %}</th>
+        <th class="text-center">{% trans 'connect_name' %}</th>
+        <th class="text-center">{% trans 'computer_room' %}</th>
+        <th class="text-center">{% trans 'Db_Host' %}</th>
         <th class="text-center">{% trans 'Port' %}</th>
-        <th class="text-center">{% trans 'Comment' %}</th>
         <th class="text-center">{% trans 'Action' %}</th>
     </tr>
     </thead>
@@ -30,19 +30,19 @@ function initTable() {
         ele: $('#inception_list_table'),
         columnDefs: [
             {targets: 1, createdCell: function (td, cellData, rowData) {
-                var detail_btn = '<a href="{% url "inceptions:inception-detail" pk=DEFAULT_PK %}">' + cellData + '</a>';
+                var detail_btn = '<a href="{% url "inceptions:dbhost-detail" pk=DEFAULT_PK %}">' + cellData + '</a>';
                 $(td).html(detail_btn.replace('{{ DEFAULT_PK }}', rowData.id));
              }},
             {targets: 5, createdCell: function (td, cellData, rowData) {
-                var update_btn = '<a href="{% url "inceptions:inception-update" pk=DEFAULT_PK %}" class="btn btn-xs btn-info">{% trans "Update" %}</a>'.replace('{{ DEFAULT_PK }}', cellData);
+                var update_btn = '<a href="{% url "inceptions:dbhost-update" pk=DEFAULT_PK %}" class="btn btn-xs btn-info">{% trans "Update" %}</a>'.replace('{{ DEFAULT_PK }}', cellData);
                 var del_btn = '<a class="btn btn-xs btn-danger m-l-xs btn-delete" data-uid="{{ DEFAULT_PK }}">{% trans "Delete" %}</a>'.replace('{{ DEFAULT_PK }}', cellData);
                 $(td).html(update_btn + del_btn)
              }}
         ],
-        ajax_url: '{% url "api-inceptions:inception-list" %}',
+        ajax_url: '{% url "api-inceptions:dbhost-list" %}',
         columns: [
-            {data: "id"}, {data: "host" }, {data: "user" },
-            {data: "port" }, {data: "comment" }, {data: "id"}
+            {data: "id"}, {data: "connection_name" }, {data: "computer_room" },
+            {data: "db_host" }, {data: "port" }, {data: "id"}
         ],
         op_html: $('#actions').html()
     };
@@ -53,10 +53,10 @@ $(document).ready(function(){
 })
 .on('click', '.btn-delete', function () {
     var $this = $(this);
-    var $data_table = $('#inception_list_table').DataTable();
+    var $data_table = $('#dbhost_list_table').DataTable();
     var name = $(this).closest("tr").find(":nth-child(2)").children('a').html();
     var uid = $this.data('uid');
-    var the_url = '{% url "api-inceptions:inception-detail" pk=DEFAULT_PK %}'.replace('{{ DEFAULT_PK }}', uid);
+    var the_url = '{% url "api-inceptions:dbhost-detail" pk=DEFAULT_PK %}'.replace('{{ DEFAULT_PK }}', uid);
     objectDelete($this, name, the_url);
     setTimeout( function () {
         $data_table.ajax.reload();
