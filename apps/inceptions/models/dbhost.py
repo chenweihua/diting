@@ -8,9 +8,10 @@ class DbHost(NoDeleteModelMixin):
     '''
     数据库连接信息表
     '''
+    ROOM_CHOICE=(("aliyun","aliyun"),("dev","dev"))
     id = models.UUIDField(default=uuid.uuid4, primary_key=True)
     connection_name = models.CharField(max_length=50,verbose_name=_('Connect name')) #连接名
-    computer_room = models.CharField(max_length=50,verbose_name=_('Computer room')) #机房
+    computer_room = models.CharField(max_length=50,choices=ROOM_CHOICE, verbose_name=_('Computer room')) #机房
     db_host = models.CharField(max_length=100, verbose_name=_('Db host ip address')) #ip地址
     username = models.CharField(max_length=150, verbose_name=_('Db user')) #数据库用户名
     port = models.IntegerField(verbose_name=_('Db port')) #端口
