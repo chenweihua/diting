@@ -22,9 +22,9 @@ class DbHostCreateForm(forms.ModelForm):
 
             'connection_name': forms.TextInput(),
             'db_host': forms.TextInput,
-            'port': forms.PasswordInput,
+            'port': forms.TextInput,
             'username': forms.TextInput,
-            'password': forms.TextInput
+            'password': forms.PasswordInput
 
         }
 
