@@ -5,7 +5,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from common.mixins import NoDeleteModelMixin
 import uuid
-
+import random
 
 ASSET_STATUS = (
     (str(1), u"使用中"),
@@ -52,6 +52,7 @@ class Idc(NoDeleteModelMixin):
     jigui = models.CharField(u"机柜信息", max_length=30, blank=True)
     ip_range = models.CharField(u"IP范围", max_length=30, blank=True)
     bandwidth = models.CharField(u"接入带宽", max_length=30, blank=True)
+    instance_id = models.CharField(max_length=64, verbose_name='实例ID', null=True, blank=True)
     memo = models.TextField(u"备注信息", max_length=200, blank=True)
 
     def __unicode__(self):
@@ -91,6 +92,11 @@ class Asset(NoDeleteModelMixin):
     asset_type = models.CharField(u"设备类型", choices=ASSET_TYPE, max_length=30, null=True, blank=True)
     status = models.CharField(u"设备状态", choices=ASSET_STATUS, max_length=30, null=True, blank=True)
     env = models.CharField(u"环境", choices=ASSET_EVN_CHOICE,blank=False, null=False, default='dev')
+    port = models.IntegerField(verbose_name="登录端口", default='22', null=False, blank=False)
+    adminuser = models.ForeignKey(verbose_name="登录用户", to='AssetAdminUser',
+                             on_delete=models.SET_NULL, null=True, blank=True)
+    category = models.ForeignKey(verbose_name='资产项目', to='AssetCategory',  on_delete=models.CASCADE,)
+    business = models.ForeignKey(verbose_name='资产业务', to='AssetBusiness', on_delete=models.SET_NULL, null=True, blank=True)
 
     def __unicode__(self):
         return self.hostname
@@ -104,9 +110,6 @@ class AssetInfo(NoDeleteModelMixin):
     asset = models.OneToOneField(Asset,on_delete=models.CASCADE, primary_key=True)
     asset_no = models.CharField(u"资产编号", max_length=50, blank=True)
     price = models.DecimalField(max_length=20, decimal_places=2, verbose_name="")
-    idc = models.ForeignKey(Idc, verbose_name=u"所在机房", on_delete=models.SET_NULL, null=True, blank=True)
-    other_ip = models.CharField(u"其它IP", max_length=100, blank=True)
-    asset_no = models.CharField(u"资产编号", max_length=50, blank=True)
     os = models.CharField(u"操作系统", max_length=100, blank=True)
     vendor = models.CharField(u"设备厂商", choices=ASSET_VENDOR_CHOICE, max_length=8, blank=True)
     buy_time = models.CharField(u"时间", max_length=50, blank=True)
@@ -144,3 +147,46 @@ class AssetGroup(NoDeleteModelMixin):
         verbose_name = u'资产组'
         verbose_name_plural = verbose_name
         db_table = 'cmdb_group'
+
+
+class AssetAdminUser(models.Model):
+    hostname = models.CharField(max_length=64, verbose_name='名称', unique=True)
+    username = models.CharField(max_length=64, verbose_name="用户名", default='root', null=True, blank=True)
+    password = models.CharField(max_length=256, blank=True, null=True, verbose_name='密码')
+    private_key = models.FileField(upload_to='upload/privatekey/%Y%m%d{}'.format(random.randint(0, 99999)),
+                                   verbose_name="私钥", null=True, blank=True)
+    create_time = models.DateTimeField(auto_now_add=True, null=True, verbose_name='创建时间', blank=True)
+    updaet_time = models.DateTimeField(auto_now=True, null=True, verbose_name='更新时间', blank=True)
+
+    class Meta:
+        db_table = "cmdb_adminuser"
+        verbose_name = "资产用户"
+        verbose_name_plural = '资产用户'
+
+    def __str__(self):
+        return self.hostname
+
+
+class AssetCategory(models.Model):
+    projects = models.CharField(max_length=128, verbose_name='资产项目')
+    remark = models.CharField(max_length=255, verbose_name="备注", null=True, blank=True)
+
+    class Meta:
+        db_table = "cmdb_category"
+        verbose_name = "资产项目"
+        verbose_name_plural = '资产项目'
+
+    def __str__(self):
+        return self.projects
+
+class AssetBusiness(models.Model):
+    business_name = models.CharField(max_length=128, verbose_name='业务')
+    remark = models.CharField(max_length=255, verbose_name="备注", null=True, blank=True)
+
+    class Meta:
+        db_table = "cmdb_business"
+        verbose_name = "资产业务"
+        verbose_name_plural = '资产业务'
+
+    def __str__(self):
+        return self.business_name
