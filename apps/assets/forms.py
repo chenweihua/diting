@@ -119,6 +119,29 @@ class IdcForm(forms.ModelForm):
         }
 
 
+class CabinetForm(forms.ModelForm):
+
+    class Meta:
+        model = Cabinet
+
+        fields = ['idc', 'cabient_code', 'cabient_name', 'remark', 'assets'
+        ]
+
+        widgets = {
+            'idc': forms.Select(attrs={'class': 'form-control', 'style': 'width:450px;'}),
+            'cabient_code': forms.TextInput(attrs={'class': 'form-control', 'style': 'width:450px;'}),
+            'cabient_name': forms.TextInput(attrs={'class': 'form-control', 'style': 'width:450px;'}),
+
+            'assets': forms.SelectMultiple(
+                attrs={
+                    'class': 'select2',
+                    'data-placeholder': "Select Assets"
+                }
+            ),
+            'remark': forms.Textarea(attrs={'class': 'form-control', 'style': 'width:450px;'}),
+
+        }
+
 class GroupForm(forms.ModelForm):
 
     def clean(self):
