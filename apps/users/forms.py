@@ -22,14 +22,7 @@ class LDAPUserUpdateForm(forms.Form):
     employeeNumber = forms.CharField(label=_('employeeNumber'), max_length=32)
     mobile = forms.CharField(label=_('mobile'), max_length=32)
     postalAddress = forms.CharField(label=_('postalAddress'), max_length=32)
-    # password = forms.CharField(
-    #     label=_('Password'), widget=forms.PasswordInput,
-    #     max_length=128, strip=False
-    # )
 
-    # def __init__(self, *args, **kwargs):
-    #     super(LDAPUserUpdateForm, self).__init__(*args, **kwargs)
-    #     self.fields['objectClass'].value = "test"
 
 
 class UserLoginForm(AuthenticationForm):

@@ -38,7 +38,7 @@ class Config:
 
     DEBUG = True
     DB_ENGINE = 'mysql'
-    DB_HOST = '192.168.72.129'
+    DB_HOST = '192.168.1.170'
     DB_PORT = 3306
     DB_USER = 'root'
     DB_PASSWORD = 'LianZ1000#'
