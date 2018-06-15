@@ -1,3 +1,4 @@
+#! /usr/bin/env python
 # ~*~ coding: utf-8 ~*~
 
 from django import forms
@@ -12,6 +13,14 @@ class AssetForm(forms.ModelForm):
         fields = [
             "hostname", 'manager_ip', 'idc' ,'wlan_ip', 'asset_type', 'status', 'env', 'port', 'adminuser', 'category', 'business'
         ]
+
+        help_texts = {
+            'hostname': '* required',
+            'manager_ip': '* required',
+            'idc': '* required',
+            'status': '* required',
+            'port': '* required',
+        }
 
         widgets = {
             'hostname': forms.TextInput(
@@ -28,14 +37,6 @@ class AssetForm(forms.ModelForm):
             'category': forms.Select(attrs={'class': 'form-control', 'style': 'width:530px;'})
         }
 
-        help_texts = {
-            'hostname': '* required',
-            'manager_ip': '* required',
-            'idc': '* required',
-            'status': '* required',
-            'port': '* required',
-        }
-
 
 
 class AssetInfoForm(forms.ModelForm):
@@ -43,19 +44,20 @@ class AssetInfoForm(forms.ModelForm):
         model = AssetInfo
 
         fields = [
-            "os", 'vendor', 'cpu_model', 'memory', 'disk', 'sn', 'asset', 'asset_no', 'price', 'buy_time', 'cpu_num',
+            "os", 'vendor', 'cpu_model', 'memory', 'disk', 'sn', 'asset_no', 'price', 'buy_time', 'cpu_num',
             'postion', 'remark'
         ]
 
+
+
+        help_texts = {
+            'username': '* required',
+            'name': '* required',
+            'email': '* required',
+        }
+
         widgets = {
-            'hostname': forms.TextInput(
-                attrs={'class': 'form-control', 'style': 'width:530px;', 'placeholder': u'必填项'}),
-            'ip': forms.TextInput(attrs={'class': 'form-control', 'style': 'width:530px;', 'placeholder': u'必填项'}),
-            'wlan_ip': forms.TextInput(attrs={'class': 'form-control', 'style': 'width:530px;'}),
-            'group': forms.SelectMultiple(attrs={'class': 'form-control', 'style': 'width:530px;'}),
             'asset_no': forms.TextInput(attrs={'class': 'form-control', 'style': 'width:530px;'}),
-            'asset_type': forms.Select(attrs={'class': 'form-control', 'style': 'width:530px;'}),
-            'status': forms.Select(attrs={'class': 'form-control', 'style': 'width:530px;'}),
             'os': forms.TextInput(attrs={'class': 'form-control', 'style': 'width:530px;'}),
             'vendor': forms.Select(attrs={'class': 'form-control', 'style': 'width:530px;'}),
             'cpu_model': forms.TextInput(attrs={'class': 'form-control', 'style': 'width:530px;'}),
@@ -63,29 +65,16 @@ class AssetInfoForm(forms.ModelForm):
             'memory': forms.TextInput(attrs={'class': 'form-control', 'style': 'width:530px;'}),
             'disk': forms.TextInput(attrs={'class': 'form-control', 'style': 'width:530px;'}),
             'sn': forms.TextInput(attrs={'class': 'form-control', 'style': 'width:530px;'}),
-            'idc': forms.Select(attrs={'class': 'form-control', 'style': 'width:530px;'}),
+            'price': forms.DecimalField(),
+            "buy_time": forms.DateTimeField(input_formats="Y-%m-%d %H:%M:%S"),
             'position': forms.TextInput(
                 attrs={'class': 'form-control', 'style': 'width:530px;', 'placeholder': u'物理机写位置，虚机写宿主'}),
-            'memo': forms.Textarea(attrs={'class': 'form-control', 'style': 'width:530px;'}),
-        }
-
-        fields = [
-            'username', 'is_ldap_user', 'name', 'email', 'groups', 'wechat',
-            'phone', 'role', 'date_expired', 'comment',
-        ]
-        help_texts = {
-            'username': '* required',
-            'name': '* required',
-            'email': '* required',
-        }
-        widgets = {
-            'groups': forms.SelectMultiple(
-                attrs={
-                    'class': 'select2',
-                    'data-placeholder': "Select Group"
-                }
+            'remark': forms.Textarea(
+                attrs={'cols': 80, 'rows': 4}
             ),
         }
+
+
 
 
 

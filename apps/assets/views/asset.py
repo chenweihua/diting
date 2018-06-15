@@ -1,3 +1,4 @@
+#! /usr/bin/env python
 from django.contrib.messages.views import SuccessMessageMixin
 
 from django.views.generic.edit import (

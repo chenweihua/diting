@@ -387,3 +387,43 @@ def generate_activation_code(len=20, n=20):
     random.seed()
     chars = string.ascii_letters + string.digits
     return [''.join([random.choice(chars) for _ in range(len)]) for _ in range(n)]
+
+
+def semd_mail():
+    from smtplib import SMTP_SSL
+    from email.mime.text import MIMEText
+
+    with SMTP_SSL(host="smtp.qq.com") as smtp:
+        smtp.login(user='1721900707@qq.com', password='xxxxxxxxxxxxx')
+
+        msg = MIMEText("这是来自Python3的一封测试邮件", _subtype="html", _charset="utf8")
+        msg["Subject"] = "测试邮件"
+        msg["from"] = '1721900707@qq.com'
+        msg["to"] = '1721900707@qq.com'
+
+        smtp.sendmail(from_addr="1721900707@qq.com", to_addrs="1721900707@qq.com", msg=msg.as_string())
+def send_attachment(files):
+    from smtplib import SMTP_SSL
+    from email.mime.text import MIMEText
+    from email.mime.multipart import MIMEMultipart
+
+    with SMTP_SSL(host="smtp.qq.com") as smtp:
+        smtp.login(user="", password="password")
+
+        msg = MIMEMultipart()
+        msg["Subject"] = "测试邮件"
+        msg["from"] = '1721900707@qq.com'
+        msg["to"] = '1721900707@qq.com'
+
+
+        for file in files:
+            with open(file,"rb") as fp:
+                mail_body = fp.read()
+                att = MIMEText(mail_body, _subtype="base64", _charset="utf-8")
+                att["Content-Type"] = "application/octet-stream"
+                att["Content-Disposition"] = 'attachment; filename=file'
+                msg.attach(att)
+        body = MIMEText(mail_body, _subtype="html", _charset="utf-8")
+        msg.attach(body)
+
+        smtp.sendmail(from_addr="1721900707@qq.com", to_addrs="1721900707@qq.com", msg=msg.as_string())
