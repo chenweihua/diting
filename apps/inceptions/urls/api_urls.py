@@ -8,7 +8,7 @@ app_name = 'inceptions'
 
 router = BulkRouter()
 router.register(r'v1/inceptions', api.InceptionViewSet, 'inception')
-router.register(r'v1/dbhost', api.DbHostViewSet, 'dbhost')
+router.register(r'v1/dbhosts', api.DbHostViewSet, 'dbhost')
 # router.register(r'v1/system-user', api.SystemUserViewSet, 'system-user')
 # router.register(r'v1/labels', api.LabelViewSet, 'label')
 # router.register(r'v1/nodes', api.NodeViewSet, 'node')

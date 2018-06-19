@@ -23,15 +23,8 @@
                        {% endif %}
                         <form method="post" class="form-horizontal" action="" >
                             {% csrf_token %}
-                            {% bootstrap_field form.connection_name  layout="horizontal" %}
-                            {% bootstrap_field form.computer_room  layout="horizontal" %}
-                            {% bootstrap_field form.db_host  layout="horizontal" %}
-                            {% bootstrap_field form.username  layout="horizontal" %}
-                            {% bootstrap_field form.port  layout="horizontal" %}
-                            {% bootstrap_field form.password  layout="horizontal" %}
-                            {% bootstrap_field form.before  layout="horizontal" %}
-                            {% bootstrap_field form.after  layout="horizontal" %}
-                            {% bootstrap_field form.url  layout="horizontal" %}
+                            {% bootstrap_field form.name  layout="horizontal" %}
+
                             <div class="form-group">
                                 <div class="col-sm-4 col-sm-offset-2">
                                     <button class="btn btn-white" type="reset">{% trans 'Cancel' %}</button>

@@ -23,8 +23,10 @@ from django.db import models
 # from users.models import User
 
 from diting.settings import AUTH_USER_MODEL
+import uuid
 
 class WikiCategory(models.Model):
+    id = models.UUIDField(default=uuid.uuid4, primary_key=True)
     name = models.CharField(max_length=100,verbose_name='分类名称',unique=True)
     class Meta:
         db_table = 'wiki_category'
@@ -36,6 +38,7 @@ class WikiCategory(models.Model):
 
 
 class WikiTag(models.Model):
+    id = models.UUIDField(default=uuid.uuid4, primary_key=True)
     name = models.CharField(max_length=100,verbose_name='标签类型',unique=True)
     class Meta:
         db_table = 'wiki_tag'
@@ -47,6 +50,7 @@ class WikiTag(models.Model):
 
 
 class WikiPost(models.Model):
+    id = models.UUIDField(default=uuid.uuid4, primary_key=True)
     title = models.CharField(max_length=70,verbose_name='标题',unique=True)
     content =  models.TextField(verbose_name='类容')
     created_time = models.DateTimeField(auto_now_add=True,verbose_name='创建时间')
@@ -65,6 +69,7 @@ class WikiPost(models.Model):
 
 
 class WikiComment(models.Model):
+    id = models.UUIDField(default=uuid.uuid4, primary_key=True)
     name = models.CharField(max_length=100,verbose_name='评论用户')
     email = models.EmailField(max_length=255,verbose_name='邮箱')
     url = models.URLField(blank=True,verbose_name='文章地址')

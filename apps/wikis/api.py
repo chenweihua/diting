@@ -22,7 +22,6 @@ from django.db.models import Q
 
 from common.mixins import IDInFilterMixin
 from common.utils import get_logger
-# from ..hands import IsSuperUser, IsValidUser, IsSuperUserOrAppUser
 from .models import WikiCategory
 from . import serializers
 
@@ -39,9 +38,9 @@ class CategoryViewSet(IDInFilterMixin, BulkModelViewSet):
     """
     API endpoint that allows Category to be viewed or edited.
     """
-    filter_fields = ("host", "port")
+    filter_fields = ("name")
     search_fields = filter_fields
-    ordering_fields = ("host", "port","user")
+    ordering_fields = ("name")
     queryset = WikiCategory.objects.all()
     serializer_class = serializers.CategorySerializer
     pagination_class = LimitOffsetPagination

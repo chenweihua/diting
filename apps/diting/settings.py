@@ -63,6 +63,7 @@ INSTALLED_APPS = [
     'likes.apps.LikesConfig',
     'inceptions.apps.InceptionsConfig',
     'wikis.apps.WikiConfig',
+    'assets.apps.AssetsConfig',
     'rest_framework',
     'rest_framework_swagger',
     'django_filters',

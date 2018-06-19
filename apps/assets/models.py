@@ -38,7 +38,7 @@ ASSET_EVN_CHOICE = (
 
 ASSET_SSH_PORT =(
     (22, 22),
-    (2222, 2222)
+    (2222, 2222),
     (222, 222)
 )
 
@@ -100,7 +100,7 @@ class Asset(NoDeleteModelMixin):
     wlan_ip = models.CharField(u"其它IP", max_length=100, blank=True)
     asset_type = models.CharField(u"设备类型", choices=ASSET_TYPE, max_length=30, null=True, blank=True)
     status = models.CharField(u"设备状态", choices=ASSET_STATUS, max_length=30, null=True, blank=True)
-    env = models.CharField(u"环境", choices=ASSET_EVN_CHOICE, blank=False, null=False, default='dev')
+    env = models.CharField( u"环境",max_length=16, choices=ASSET_EVN_CHOICE, blank=False, null=False, default='dev')
     port = models.IntegerField(verbose_name="登录端口", default='22', choices=ASSET_SSH_PORT, null=False, blank=False)
     adminuser = models.ForeignKey(verbose_name="登录用户", to='AssetAdminUser',
                                   on_delete=models.SET_NULL, null=True, blank=True)
@@ -119,7 +119,7 @@ class Asset(NoDeleteModelMixin):
 class AssetInfo(NoDeleteModelMixin):
     asset = models.OneToOneField(Asset, on_delete=models.CASCADE, primary_key=True)
     asset_no = models.CharField(u"资产编号", max_length=50, blank=True)
-    price = models.DecimalField(max_length=20, decimal_places=2, verbose_name="")
+    price = models.DecimalField(max_digits=20, decimal_places=2, verbose_name="")
     os = models.CharField(u"操作系统", max_length=100, blank=True)
     vendor = models.CharField(u"设备厂商", choices=ASSET_VENDOR_CHOICE, max_length=8, blank=True)
     buy_time = models.CharField(u"时间", max_length=50, blank=True)

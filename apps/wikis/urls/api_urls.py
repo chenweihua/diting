@@ -10,11 +10,12 @@ from .. import api
 app_name = 'wikis'
 
 router = BulkRouter()
-router.register(r'v1/categorys', api.CategoryViewSet, 'cagegory')
+router.register(r'v1/categorys', api.CategoryViewSet, 'category')
 
 
-urlpatterns = [
-
-]
+urlpatterns = []
 
 urlpatterns += router.urls
+
+
+print(router.urls)
