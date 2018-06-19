@@ -30,6 +30,15 @@
 
 </li>
 
+<li id="wikis">
+    <a href="#">
+        <i class="fa fa-group" style="width: 14px"></i> <span class="nav-label">{% trans 'Wiki' %}</span><span class="fa arrow"></span>
+    </a>
+    <ul class="nav nav-second-level active">
+        <li id="category"><a href="{% url 'wikis:category-list' %}">{% trans 'Category list' %}</a></li>
+    </ul>
+
+</li>
 {#<li id="navis">#}
 {#    <a>#}
 {#        <i class="fa fa-inbox" style="width: 14px"></i> <span class="nav-label">{% trans 'Navis' %}</span><span class="fa arrow"></span>#}

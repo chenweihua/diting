@@ -21,6 +21,7 @@ urlpatterns = [
     url(r'^navis/', include('navis.urls.view_urls', namespace='navis')),
     url(r'^likes/', include('likes.urls.view_urls', namespace='likes')),
     url(r'^inceptions/', include('inceptions.urls.view_urls', namespace='inceptions')),
+    url(r'^wikis/', include('wikis.urls.view_urls', namespace='wikis')),
 
     # Api url view map
     url(r'^api/users/', include('users.urls.api_urls', namespace='api-users')),
@@ -28,6 +29,7 @@ urlpatterns = [
     url(r'^api/navis/', include('navis.urls.api_urls', namespace='api-navis')),
     url(r'^api/likes/', include('likes.urls.api_urls', namespace='api-likes')),
     url(r'^api/inceptions/', include('inceptions.urls.api_urls', namespace='api-inceptions')),
+    url(r'^api/wikis/', include('wikis.urls.api_urls', namespace='api-wikis')),
 
     # External apps url
     url(r'^captcha/', include('captcha.urls')),

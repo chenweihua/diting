@@ -40,7 +40,7 @@ logger = get_logger(__file__)
 
 
 class DbHostListView(TemplateView):
-    template_name = 'inceptions/dbhost_list.html'
+    template_name = 'inceptions/category_list.html'
 
     def get_context_data(self, **kwargs):
 
@@ -58,7 +58,7 @@ class DbHostListView(TemplateView):
 class DbHostCreateView(SuccessMessageMixin, CreateView):
     model = DbHost
     form_class = forms.DbHostCreateForm
-    template_name = 'inceptions/dbhost_create_update.html'
+    template_name = 'inceptions/category_create_update.html'
     success_url = reverse_lazy('inceptions:dbhost-list')
 
 
@@ -85,7 +85,7 @@ class DbHostCreateView(SuccessMessageMixin, CreateView):
 class DbHostUpdateView( SuccessMessageMixin, UpdateView):
     model = DbHost
     form_class = forms.DbHostUpdateForm
-    template_name = 'inceptions/dbhost_create_update.html'
+    template_name = 'inceptions/category_create_update.html'
     success_url = reverse_lazy('inceptions:dbhost-list')
 
     def get_context_data(self, **kwargs):

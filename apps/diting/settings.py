@@ -62,6 +62,7 @@ INSTALLED_APPS = [
     'navis.apps.NaviConfig',
     'likes.apps.LikesConfig',
     'inceptions.apps.InceptionsConfig',
+    'wikis.apps.WikiConfig',
     'rest_framework',
     'rest_framework_swagger',
     'django_filters',
