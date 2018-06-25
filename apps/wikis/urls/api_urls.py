@@ -11,6 +11,9 @@ app_name = 'wikis'
 
 router = BulkRouter()
 router.register(r'v1/categorys', api.CategoryViewSet, 'category')
+router.register(r'v1/posts', api.CategoryViewSet, 'post')
+router.register(r'v1/tags', api.CategoryViewSet, 'tag')
+router.register(r'v1/comments', api.CategoryViewSet, 'comment')
 
 
 urlpatterns = []
@@ -18,4 +21,4 @@ urlpatterns = []
 urlpatterns += router.urls
 
 
-print(router.urls)
+print(urlpatterns)

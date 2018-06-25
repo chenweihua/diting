@@ -14,7 +14,7 @@ schema_view = get_schema_view(title='Users API', renderer_classes=[OpenAPIRender
 urlpatterns = [
     url(r'^$', IndexView.as_view(), name='index'),
     url(r'^url/(?P<pk>[0-9a-zA-Z\-]{1,36})$', UrlView.as_view(), name='url-redirect'),
-    url(r'^users/', include('users.urls.views_urls', namespace='users')),
+    url(r'^users/', include('users.urls.view_urls', namespace='users')),
     url(r'^perms/', include('perms.urls.views_urls', namespace='perms')),
     url(r'^settings/', include('common.urls.view_urls', namespace='settings')),
     url(r'^common/', include('common.urls.view_urls', namespace='common')),

@@ -11,79 +11,79 @@ from django.contrib.messages.views import SuccessMessageMixin
 
 from common.utils import get_logger
 from common.const import create_success_msg, update_success_msg
-from ..models import WikiCategory
+from ..models import WikiTag
 from users.models import User
 
 from .. import forms
 
-__all__ = ['CategoryListView', 'CategoryCreateView', 'CategoryUpdateView', 'CategoryDetailView']
+__all__ = ['TagListView', 'TagCreateView', 'TagUpdateView', 'TagDetailView']
 logger = get_logger(__name__)
 
 
-class CategoryListView(TemplateView):
-    template_name = 'wikis/category_list.html'
+class TagListView(TemplateView):
+    template_name = 'wikis/tag_list.html'
 
     def get_context_data(self, **kwargs):
         context = {
-            'app': _('Categorys'),
-            'action': _('Category list')
+            'app': _('Tags'),
+            'action': _('Tag list')
         }
         kwargs.update(context)
         return super().get_context_data(**kwargs)
 
 
-class CategoryCreateView(SuccessMessageMixin, CreateView):
-    model = WikiCategory
-    form_class = forms.WikeCategoryForm
-    template_name = 'wikis/category_create_update.html'
-    success_url = reverse_lazy('wikis:category-list')
+class TagCreateView(SuccessMessageMixin, CreateView):
+    model = WikiTag
+    form_class = forms.WikeTagForm
+    template_name = 'wikis/tag_create_update.html'
+    success_url = reverse_lazy('wikis:tag-list')
     success_message = create_success_msg
 
     def get_context_data(self, **kwargs):
         context = {
-            'app': _('Category'),
-            'action': _('Create category'),
+            'app': _('Tag'),
+            'action': _('Create tag'),
         }
         kwargs.update(context)
         return super().get_context_data(**kwargs)
 
 
-class CategoryUpdateView(SuccessMessageMixin, UpdateView):
-    model = WikiCategory
-    form_class = forms.WikeCategoryForm
-    template_name = 'wikis/category_create_update.html'
-    success_url = reverse_lazy('wikis:category-list')
+class TagUpdateView(SuccessMessageMixin, UpdateView):
+    model = WikiTag
+    form_class = forms.WikeTagForm
+    template_name = 'wikis/tag_create_update.html'
+    success_url = reverse_lazy('wikis:tag-list')
     success_message = update_success_msg
 
     def get_context_data(self, **kwargs):
 
         context = {
-            'app': _('Category'),
-            'action': _('Update Category'),
+            'app': _('Tag'),
+            'action': _('Update Tag'),
         }
         kwargs.update(context)
         return super().get_context_data(**kwargs)
 
 
-class CategoryDetailView(DetailView):
-    model = WikiCategory
-    context_object_name = 'category'
-    template_name = 'wikis/category_detail.html'
+class TagDetailView(DetailView):
+    model = WikiTag
+    context_object_name = 'tag'
+    template_name = 'wikis/tag_detail.html'
 
     def get_context_data(self, **kwargs):
         context = {
-            'app': _('Category'),
-            'action': _('Category  detail'),
+            'app': _('Tag'),
+            'action': _('Tag  detail'),
 
         }
         kwargs.update(context)
         return super().get_context_data(**kwargs)
 #
 #
-# class CategoryGrantedAssetView(AdminUserRequiredMixin, DetailView):
-#     model = Category
-#     template_name = 'wikis/category_granted_asset.html'
-#     context_object_name = 'category'
+# class TagGrantedAssetView(AdminUserRequiredMixin, DetailView):
+#     model = Tag
+#     template_name = 'wikis/tag_granted_asset.html'
+#     context_object_name = 'tag'
 #     object = None
 #
 #     def get_context_data(self, **kwargs):

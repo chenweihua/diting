@@ -3,15 +3,19 @@
 {% block table_search %}{% endblock %}
 {% block table_container %}
 <div class="uc pull-left  m-r-5">
-    <a href="{% url 'wikis:category-create' %}" class="btn btn-sm btn-primary"> {% trans "Create category" %} </a>
+    <a href="{% url 'wikis:post-create' %}" class="btn btn-sm btn-primary"> {% trans "Create post" %} </a>
 </div>
-<table class="table table-striped table-bordered table-hover " id="category_list_table" >
+<table class="table table-striped table-bordered table-hover " id="post_list_table" >
     <thead>
     <tr>
         <th class="text-center">
             <input type="checkbox" id="check_all" class="ipt_check_all" >
         </th>
-        <th class="text-center">{% trans 'name' %}</th>
+        <th class="text-center">{% trans 'title' %}</th>
+                <th class="text-center">{% trans 'category' %}</th>
+                <th class="text-center">{% trans 'tags' %}</th>
+                <th class="text-center">{% trans 'author' %}</th>
+                <th class="text-center">{% trans 'content' %}</th>
         <th class="text-center">{% trans 'Action' %}</th>
     </tr>
     </thead>
@@ -24,21 +28,21 @@
 <script>
 function initTable() {
     var options = {
-        ele: $('#category_list_table'),
+        ele: $('#post_list_table'),
         columnDefs: [
             {targets: 1, createdCell: function (td, cellData, rowData) {
-                var detail_btn = '<a href="{% url "wikis:category-detail" pk=DEFAULT_PK %}">' + cellData + '</a>';
+                var detail_btn = '<a href="{% url "wikis:post-detail" pk=DEFAULT_PK %}">' + cellData + '</a>';
                 $(td).html(detail_btn.replace('{{ DEFAULT_PK }}', rowData.id));
              }},
-            {targets: 2, createdCell: function (td, cellData, rowData) {
-                var update_btn = '<a href="{% url "wikis:category-update" pk=DEFAULT_PK %}" class="btn btn-xs btn-info">{% trans "Update" %}</a>'.replace('{{ DEFAULT_PK }}', cellData);
+            {targets: 6, createdCell: function (td, cellData, rowData) {
+                var update_btn = '<a href="{% url "wikis:post-update" pk=DEFAULT_PK %}" class="btn btn-xs btn-info">{% trans "Update" %}</a>'.replace('{{ DEFAULT_PK }}', cellData);
                 var del_btn = '<a class="btn btn-xs btn-danger m-l-xs btn-delete" data-uid="{{ DEFAULT_PK }}">{% trans "Delete" %}</a>'.replace('{{ DEFAULT_PK }}', cellData);
                 $(td).html(update_btn + del_btn)
              }}
         ],
-        ajax_url: '{% url "api-wikis:category-list" %}',
+        ajax_url: '{% url "api-wikis:post-list" %}',
         columns: [
-            {data: "id"}, {data: "name" }, {data: "id"}
+            {data: "id"}, {data: "title" }, {data: "category"},{data: "tags"},{data: "author"},{data: "content"},{data: "id"}
         ],
         op_html: $('#actions').html()
     };
@@ -49,10 +53,10 @@ $(document).ready(function(){
 })
 .on('click', '.btn-delete', function () {
     var $this = $(this);
-    var $data_table = $('#category_list_table').DataTable();
+    var $data_table = $('#post_list_table').DataTable();
     var name = $(this).closest("tr").find(":nth-child(2)").children('a').html();
     var uid = $this.data('uid');
-    var the_url = '{% url "api-wikis:category-detail" pk=DEFAULT_PK %}'.replace('{{ DEFAULT_PK }}', uid);
+    var the_url = '{% url "api-wikis:post-detail" pk=DEFAULT_PK %}'.replace('{{ DEFAULT_PK }}', uid);
     objectDelete($this, name, the_url);
     setTimeout( function () {
         $data_table.ajax.reload();

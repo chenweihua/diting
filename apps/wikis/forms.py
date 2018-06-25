@@ -54,21 +54,21 @@ class WikePostForm(forms.ModelForm):
     class Meta:
         model = WikiPost
         fields = [
-            "title", "content",  "category", "tags", "author"
+            "title", "content",  "category", "tags", "author",
         ]
 
         help_texts = {
             'title': '* required',
             "content": '* required',
             "category": '* required',
-
+            "author":  '* required',
 
         }
 
         widgets = {
-            'name': forms.TextInput(),
+            'title': forms.TextInput(),
             "content": forms.Textarea(
-                attrs={'cols': 80, 'rows': 4}
+                attrs={'cols': 80, 'rows': 10}
             ),
             "category": forms.Select(
                 attrs={
@@ -78,19 +78,19 @@ class WikePostForm(forms.ModelForm):
             "tags": forms.SelectMultiple(
                 attrs={
                     'class': 'select2',
-                    'data-placeholder': _('Join tag')
+                    'data-placeholder': _('Join Tags')
                 }
 
             ),
             "author": forms.Select(
                 attrs={
-                    'class': 'select2', 'data-placeholder': _('user')
+                    'class': 'select2', 'data-placeholder': _('User')
                 }
             )
         }
 
 
-class WikeCommentForm(forms.ModelForm):
+class WikiCommentForm(forms.ModelForm):
     class Meta:
         model = WikiComment
         fields = [

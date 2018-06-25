@@ -12,3 +12,7 @@
 """
 
 from .wikicategory import *
+from .wikicomment import  *
+
+from .wikipost import *
+from  .wiktag import  *

@@ -22,7 +22,7 @@ from django.db.models import Q
 
 from common.mixins import IDInFilterMixin
 from common.utils import get_logger
-from .models import WikiCategory
+from .models import WikiCategory, WikiPost, WikiTag
 from . import serializers
 
 
@@ -30,7 +30,7 @@ from . import serializers
 
 logger = get_logger(__file__)
 __all__ = [
-    'CategoryViewSet'
+    'CategoryViewSet',
 ]
 
 
@@ -38,10 +38,45 @@ class CategoryViewSet(IDInFilterMixin, BulkModelViewSet):
     """
     API endpoint that allows Category to be viewed or edited.
     """
-    filter_fields = ("name")
+    filter_fields = ("name",)
     search_fields = filter_fields
     ordering_fields = ("name")
     queryset = WikiCategory.objects.all()
+    serializer_class = serializers.CategorySerializer
+    pagination_class = LimitOffsetPagination
+
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset
+
+
+class TagViewSet(IDInFilterMixin, BulkModelViewSet):
+    """
+    API endpoint that allows Category to be viewed or edited.
+    """
+    filter_fields = ("name",)
+    search_fields = filter_fields
+    ordering_fields = ("name")
+    queryset = WikiTag.objects.all()
+    serializer_class = serializers.CategorySerializer
+    pagination_class = LimitOffsetPagination
+
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset
+
+
+
+class CategoryViewSet(IDInFilterMixin, BulkModelViewSet):
+    """
+    API endpoint that allows Category to be viewed or edited.
+    """
+    filter_fields = ("title")
+    search_fields = filter_fields
+    ordering_fields = ("title")
+    queryset = WikiPost.objects.all()
     serializer_class = serializers.CategorySerializer
     pagination_class = LimitOffsetPagination
 
