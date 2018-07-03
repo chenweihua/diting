@@ -73,7 +73,7 @@ class CategoryViewSet(IDInFilterMixin, BulkModelViewSet):
     """
     API endpoint that allows Category to be viewed or edited.
     """
-    filter_fields = ("title")
+    filter_fields = ("title",)
     search_fields = filter_fields
     ordering_fields = ("title")
     queryset = WikiPost.objects.all()

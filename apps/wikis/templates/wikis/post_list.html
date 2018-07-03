@@ -54,10 +54,10 @@ $(document).ready(function(){
 .on('click', '.btn-delete', function () {
     var $this = $(this);
     var $data_table = $('#post_list_table').DataTable();
-    var name = $(this).closest("tr").find(":nth-child(2)").children('a').html();
-    var uid = $this.data('uid');
-    var the_url = '{% url "api-wikis:post-detail" pk=DEFAULT_PK %}'.replace('{{ DEFAULT_PK }}', uid);
-    objectDelete($this, name, the_url);
+    var title = $(this).closest("tr").find(":nth-child(2)").children('a').html();
+    var id = $this.data('id');
+    var the_url = '{% url "api-wikis:post-detail" pk=DEFAULT_PK %}'.replace('{{ DEFAULT_PK }}', id);
+    objectDelete($this, title, the_url);
     setTimeout( function () {
         $data_table.ajax.reload();
     }, 3000);

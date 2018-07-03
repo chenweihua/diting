@@ -19,6 +19,3 @@ router.register(r'v1/comments', api.CategoryViewSet, 'comment')
 urlpatterns = []
 
 urlpatterns += router.urls
-
-
-print(urlpatterns)

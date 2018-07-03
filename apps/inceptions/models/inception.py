@@ -3,7 +3,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from common.mixins import NoDeleteModelMixin
 import uuid
-
+from assets.models import Asset
 
 class Inception(NoDeleteModelMixin):
     id = models.UUIDField(default=uuid.uuid4, primary_key=True)
@@ -15,6 +15,9 @@ class Inception(NoDeleteModelMixin):
     purpose = models.CharField(default='0', max_length=2, choices=(('0', u'审核'), ('1', u'查询')), verbose_name=u'用途')
     is_active = models.IntegerField(null=False, default=1, verbose_name=u'1:启用，2：禁用')
     protection_user = models.TextField(default='root', null=False, verbose_name=u'被保护的数据库账号， 以逗号分隔')
+    backup_asset = models.ForeignKey('Asset', on_delete=models.CASCADE, verbose_name="ssh machive")
+    backup_user = models.CharField(max_length=32, verbose_name="incetion backup user")
+    backup_password = models.CharField(max_length=64, verbose_name="inception backup password")
     comment = models.CharField(max_length=128, verbose_name=u'主机描述')
 
 

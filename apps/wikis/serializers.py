@@ -8,7 +8,7 @@ from .models import WikiCategory, WikiTag, WikiPost
 
 
 __all__ = [
-    'CategorySerializer'
+    'CategorySerializer', 'PostSerializer', 'TagSerializer'
 ]
 
 
