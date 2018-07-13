@@ -52,6 +52,7 @@ class UserInfo(NoDeleteModelMixin):
 
 
 class Idc(NoDeleteModelMixin):
+    id = models.UUIDField(default=uuid.uuid4, primary_key=True)
     name = models.CharField(u"机房名称", max_length=255, unique=True)
     address = models.CharField(u"机房地址", max_length=100, blank=True)
     tel = models.CharField(u"机房电话", max_length=30, blank=True)
@@ -73,6 +74,7 @@ class Idc(NoDeleteModelMixin):
 
 
 class Cabinet(NoDeleteModelMixin):
+    id = models.UUIDField(default=uuid.uuid4, primary_key=True)
     idc = models.ForeignKey(Idc, verbose_name=u"所在机房", on_delete=models.SET_NULL, null=True, blank=True)
     cabient_code = models.CharField(u"机架标识", max_length=255, unique=True)
     cabient_name = models.CharField(u"机架名称", max_length=100)
@@ -97,6 +99,7 @@ class Asset(NoDeleteModelMixin):
     hostname = models.CharField(max_length=50, verbose_name=u"主机名", unique=True)
     manager_ip = models.GenericIPAddressField(u"管理IP", max_length=15)
     idc = models.ForeignKey(Idc, verbose_name=u"所在机房", on_delete=models.SET_NULL, null=True, blank=True)
+    # cabient = models.ForeignKey(Cabinet, verbose_name=u"机架", on_delete=models.SET_NULL,null=True, blank=True)
     wlan_ip = models.CharField(u"其它IP", max_length=100, blank=True)
     asset_type = models.CharField(u"设备类型", choices=ASSET_TYPE, max_length=30, null=True, blank=True)
     status = models.CharField(u"设备状态", choices=ASSET_STATUS, max_length=30, null=True, blank=True)
@@ -107,6 +110,9 @@ class Asset(NoDeleteModelMixin):
     category = models.ForeignKey(verbose_name='资产项目', to='AssetCategory', on_delete=models.CASCADE, )
     business = models.ForeignKey(verbose_name='资产业务', to='AssetBusiness', on_delete=models.SET_NULL, null=True,
                                  blank=True)
+    assetinfo= models.OneToOneField('AssetInfo', on_delete=models.CASCADE)
+    # assetgroup = models.ManyToManyField('AssetGroup')
+    # admin_user = models.ForeignKey('AdminUser', on_delete=models.SET_NULL, null=True, verbose_name=_("Admin user"))
     def __unicode__(self):
         return self.hostname
 
@@ -117,7 +123,7 @@ class Asset(NoDeleteModelMixin):
 
 
 class AssetInfo(NoDeleteModelMixin):
-    asset = models.OneToOneField(Asset, on_delete=models.CASCADE, primary_key=True)
+    id = models.UUIDField(default=uuid.uuid4, primary_key=True)
     asset_no = models.CharField(u"资产编号", max_length=50, blank=True)
     price = models.DecimalField(max_digits=20, decimal_places=2, verbose_name="")
     os = models.CharField(u"操作系统", max_length=100, blank=True)
@@ -141,6 +147,7 @@ class AssetInfo(NoDeleteModelMixin):
 
 
 class AssetGroup(NoDeleteModelMixin):
+    id = models.UUIDField(default=uuid.uuid4, primary_key=True)
     name = models.CharField(u"服务器组名", max_length=30, unique=True)
     remark = models.CharField(u"描述", max_length=100, blank=True)
     assets = models.ManyToManyField(
@@ -159,14 +166,15 @@ class AssetGroup(NoDeleteModelMixin):
         db_table = 'cmdb_group'
 
 
-class AssetAdminUser(models.Model):
-    hostname = models.CharField(max_length=64, verbose_name='名称', unique=True)
+class AdminUser(models.Model):
+    id = models.UUIDField(default=uuid.uuid4, primary_key=True)
+    adminname = models.CharField(max_length=64, verbose_name='名称', unique=True)
     username = models.CharField(max_length=64, verbose_name="用户名", default='root', null=True, blank=True)
     password = models.CharField(max_length=256, blank=True, null=True, verbose_name='密码')
     private_key = models.FileField(upload_to='upload/privatekey/%Y%m%d{}'.format(random.randint(0, 99999)),
                                    verbose_name="私钥", null=True, blank=True)
     create_time = models.DateTimeField(auto_now_add=True, null=True, verbose_name='创建时间', blank=True)
-    updaet_time = models.DateTimeField(auto_now=True, null=True, verbose_name='更新时间', blank=True)
+    update_time = models.DateTimeField(auto_now=True, null=True, verbose_name='更新时间', blank=True)
 
     class Meta:
         db_table = "cmdb_adminuser"
@@ -178,6 +186,7 @@ class AssetAdminUser(models.Model):
 
 
 class AssetCategory(models.Model):
+    id = models.UUIDField(default=uuid.uuid4, primary_key=True)
     projects = models.CharField(max_length=128, verbose_name='资产项目')
     remark = models.CharField(max_length=255, verbose_name="备注", null=True, blank=True)
 
@@ -191,6 +200,7 @@ class AssetCategory(models.Model):
 
 
 class AssetBusiness(models.Model):
+    id = models.UUIDField(default=uuid.uuid4, primary_key=True)
     business_name = models.CharField(max_length=128, verbose_name='业务')
     remark = models.CharField(max_length=255, verbose_name="备注", null=True, blank=True)
 

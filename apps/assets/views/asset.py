@@ -8,7 +8,7 @@ from django.views.generic.edit import (
 from ..utils import AdminUserRequiredMixin
 
 from ..models import *
-from ..forms import *
+from ..forms import AssetForm, AssetInfoForm
 
 
 class AssetCreateView(AdminUserRequiredMixin, SuccessMessageMixin, CreateView):
